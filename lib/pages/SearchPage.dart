@@ -86,7 +86,9 @@ class _SearchPageState extends State<SearchPage> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         Row(
-                          children: this.moviesContainer,
+                          children: 
+                          (this.searchController.text != '' && this.moviesContainer.isEmpty) ? [MoviesContainer(imgUrl: 'https://miro.medium.com/max/880/0*H3jZONKqRuAAeHnG.jpg', title: '', buttonText: '')] :
+                          this.moviesContainer,
                         ),
                       ],
                     ),
