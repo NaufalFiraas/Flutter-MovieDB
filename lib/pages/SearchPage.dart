@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_db/custom_widgets/MoviesContainer.dart';
 import 'package:movie_db/get_apis/GetMovies.dart';
 
-
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -86,9 +85,16 @@ class _SearchPageState extends State<SearchPage> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         Row(
-                          children: 
-                          (this.searchController.text != '' && this.moviesContainer.isEmpty) ? [MoviesContainer(imgUrl: 'https://miro.medium.com/max/880/0*H3jZONKqRuAAeHnG.jpg', title: '', buttonText: '')] :
-                          this.moviesContainer,
+                          children: (this.searchController.text != '' &&
+                                  this.moviesContainer.isEmpty)
+                              ? [
+                                  MoviesContainer(
+                                      imgUrl:
+                                          'https://miro.medium.com/max/880/0*H3jZONKqRuAAeHnG.jpg',
+                                      title: '',
+                                      buttonText: '')
+                                ]
+                              : this.moviesContainer,
                         ),
                       ],
                     ),
@@ -106,18 +112,25 @@ class _SearchPageState extends State<SearchPage> {
     this.moviesContainer = [];
     await GetMovies.getMovies(this.searchController.text).then((values) {
       for (int i = 0; i < values.length; i++) {
-        this.moviesContainer.add((i == values.length - 1)
-            ? MoviesContainer(
-                imgUrl: values[i].imgUrl,
-                title: values[i].title,
-                buttonText: 'Details',
-                marginRight: 28,
-              )
-            : MoviesContainer(
-                imgUrl: values[i].imgUrl,
-                title: values[i].title,
-                buttonText: 'Details',
-              ));
+        this.moviesContainer.add(
+              (values[i].imgUrl == 'N/A')
+                  ? MoviesContainer(
+                      imgUrl:
+                          'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png',
+                      title: values[i].title,
+                      buttonText: 'Details')
+                  : (i == values.length - 1)
+                      ? MoviesContainer(
+                          imgUrl: values[i].imgUrl,
+                          title: values[i].title,
+                          buttonText: 'Details',
+                          marginRight: 28,
+                        )
+                      : MoviesContainer(
+                          imgUrl: values[i].imgUrl,
+                          title: values[i].title,
+                          buttonText: 'Details'),
+            );
       }
     });
   }
