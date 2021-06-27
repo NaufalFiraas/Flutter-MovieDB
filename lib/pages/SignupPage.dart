@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:movie_db/custom_widgets/Buttons.dart';
 import 'package:movie_db/custom_widgets/Textfields.dart';
-import 'SignupPage.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignupPage extends StatefulWidget {
+  const SignupPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignupPageState extends State<SignupPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -37,16 +36,16 @@ class _LoginPageState extends State<LoginPage> {
                 flex: 2,
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                  padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
                     color: Colors.white10,
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'Login',
+                        'Daftar',
                         style: TextStyle(
                           fontSize: 45,
                           fontWeight: FontWeight.w700,
@@ -61,20 +60,19 @@ class _LoginPageState extends State<LoginPage> {
                         obscure: false,
                       ),
                       Textfields(
-                        label: 'Password',
-                        controller: this.passwordController,
-                        icon: Icons.settings,
-                        obscure: true,
-                      ),
+                          label: 'Password',
+                          controller: this.passwordController,
+                          icon: Icons.settings,
+                          obscure: true),
                     ],
                   ),
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.9,
                 margin: EdgeInsets.only(
                   top: 10,
                 ),
+                width: MediaQuery.of(context).size.width * 0.9,
                 child: Text(
                   'Testing',
                   style: TextStyle(
@@ -84,23 +82,16 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.end,
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
               Flexible(
                 flex: 1,
                 child: Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Buttons(height: 40, width: 130, text: 'Login'),
-                      GestureDetector(
-                        child: Buttons(height: 40, width: 130, text: 'Daftar'),
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return SignupPage();
-                          }));
-                        },
+                      Buttons(
+                        height: 40,
+                        width: 130,
+                        text: 'Daftar',
                       ),
                     ],
                   ),
