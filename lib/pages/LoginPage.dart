@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String alert = '';
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                   top: 10,
                 ),
                 child: Text(
-                  'Testing',
+                  this.alert,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.red,
