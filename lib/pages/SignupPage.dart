@@ -99,8 +99,8 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         onTap: () {
                           User.getUser(
-                                  userKey: this.usernameController.text,
-                                  passwordKey: this.passwordController.text)
+                                  userKey: '${this.usernameController.text}Data',
+                                  passwordKey: '${this.passwordController.text}Data')
                               .then((value) {
                             if (this.usernameController.text == '' ||
                                 this.passwordController.text == '') {
@@ -120,7 +120,7 @@ class _SignupPageState extends State<SignupPage> {
                                         '${this.passwordController.text}Data',
                                     passwordValue:
                                         this.passwordController.text);
-                                Navigator.push(context,
+                                Navigator.pushReplacement(context,
                                     MaterialPageRoute(builder: (context) {
                                   return LoginPage();
                                 }));

@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                               this.alert = 'Isikan username dan password!';
                               setState(() {});
                             } else {
-                              if (value.username == '') {
+                              if (value.username == '' && value.password == '') {
                                 this.alert = 'User belum terdaftar';
                                 setState(() {});
                               } else {
@@ -119,9 +119,9 @@ class _LoginPageState extends State<LoginPage> {
                                         value.password) {
                                   this.alert = '';
                                   setState(() {});
-                                  Navigator.push(context,
+                                  Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return SearchPage();
+                                    return SearchPage(username: value.username,);
                                   }));
                                 } else {
                                   this.alert = 'Username / password salah!';
@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                       GestureDetector(
                         child: Buttons(height: 40, width: 130, text: 'Daftar'),
                         onTap: () {
-                          Navigator.push(context,
+                          Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (context) {
                             return SignupPage();
                           }));

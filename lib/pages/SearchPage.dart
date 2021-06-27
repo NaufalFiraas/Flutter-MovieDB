@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:movie_db/custom_widgets/MoviesContainer.dart';
 import 'package:movie_db/get_apis/GetMovies.dart';
+import 'package:movie_db/pages/LoginPage.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  final String username;
+  const SearchPage({Key? key, required this.username}) : super(key: key);
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _SearchPageState createState() => _SearchPageState(username: this.username);
 }
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController searchController = TextEditingController();
   List<Widget> moviesContainer = [];
+  String username;
+
+  _SearchPageState({required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -43,41 +48,70 @@ class _SearchPageState extends State<SearchPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                    margin: EdgeInsets.only(
-                      top: 20,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5,
-                          color: Colors.black26,
-                          offset: Offset(2, 3),
-                          spreadRadius: 2,
+                  Column(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        margin: EdgeInsets.only(
+                          top: 10,
                         ),
-                      ],
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple)),
-                        labelText: 'Search',
-                        labelStyle: TextStyle(
-                          fontFamily: 'Pacifico',
-                          color: Colors.purple,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              this.username,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Pacifico',
+                                  color: Colors.white),
+                            ),
+                            IconButton(
+                              icon:
+                                  Icon(Icons.exit_to_app, color: Colors.white),
+                              onPressed: () {
+                                Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return LoginPage();
+                                }));
+                              },
+                            ),
+                          ],
                         ),
-                        icon: Icon(Icons.search, color: Colors.purple),
                       ),
-                      controller: this.searchController,
-                      onChanged: (value) {
-                        addMovies();
-                        setState(() {});
-                      },
-                    ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5,
+                              color: Colors.black26,
+                              offset: Offset(2, 3),
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purple)),
+                            labelText: 'Search',
+                            labelStyle: TextStyle(
+                              fontFamily: 'Pacifico',
+                              color: Colors.purple,
+                            ),
+                            icon: Icon(Icons.search, color: Colors.purple),
+                          ),
+                          controller: this.searchController,
+                          onChanged: (value) {
+                            addMovies();
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.7,
