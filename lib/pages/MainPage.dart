@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_db/custom_widgets/Buttons.dart';
-import 'SearchPage.dart';
+import 'LoginPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -63,8 +63,8 @@ class _MainPageState extends State<MainPage> {
             alignment: Alignment(0, 0.7),
             child: GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                  return SearchPage();
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginPage();
                 }));
               },
               child: Buttons(height: 60, width: 180, text: 'Masuk',),
