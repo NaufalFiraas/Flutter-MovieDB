@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movie_db/SharedPreference/GetUser.dart';
 import 'package:movie_db/custom_widgets/Buttons.dart';
 import 'package:movie_db/custom_widgets/Textfields.dart';
+import 'SearchPage.dart';
 import 'SignupPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String alert = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -94,11 +97,46 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Buttons(height: 40, width: 130, text: 'Login'),
+                      GestureDetector(
+                        child: Buttons(height: 40, width: 130, text: 'Login'),
+                        onTap: () {
+                          User.getUser(
+                                  userKey: '${this.usernameController.text}Data',
+                                  passwordKey: '${this.passwordController.text}Data')
+                              .then((value) {
+                            if (this.usernameController.text == '' ||
+                                this.passwordController.text == '') {
+                              this.alert = 'Isikan username dan password!';
+                              setState(() {});
+                            } else {
+                              if (value.username == '') {
+                                this.alert = 'User belum terdaftar';
+                                setState(() {});
+                              } else {
+                                if (this.usernameController.text ==
+                                        value.username &&
+                                    this.passwordController.text ==
+                                        value.password) {
+                                  this.alert = '';
+                                  setState(() {});
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return SearchPage();
+                                  }));
+                                } else {
+                                  this.alert = 'Username / password salah!';
+                                  setState(() {});
+                                }
+                              }
+                            }
+                          });
+                        },
+                      ),
                       GestureDetector(
                         child: Buttons(height: 40, width: 130, text: 'Daftar'),
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
                             return SignupPage();
                           }));
                         },

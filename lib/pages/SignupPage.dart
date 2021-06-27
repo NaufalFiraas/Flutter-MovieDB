@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movie_db/SharedPreference/GetUser.dart';
 import 'package:movie_db/custom_widgets/Buttons.dart';
 import 'package:movie_db/custom_widgets/Textfields.dart';
+import 'LoginPage.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String alert = '';
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +77,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Text(
-                  'Testing',
+                  this.alert,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.red,
@@ -88,10 +91,43 @@ class _SignupPageState extends State<SignupPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Buttons(
-                        height: 40,
-                        width: 130,
-                        text: 'Daftar',
+                      GestureDetector(
+                        child: Buttons(
+                          height: 40,
+                          width: 130,
+                          text: 'Daftar',
+                        ),
+                        onTap: () {
+                          User.getUser(
+                                  userKey: this.usernameController.text,
+                                  passwordKey: this.passwordController.text)
+                              .then((value) {
+                            if (this.usernameController.text == '' ||
+                                this.passwordController.text == '') {
+                              this.alert = 'Isikan username dan password!';
+                              setState(() {});
+                            } else {
+                              if (this.usernameController.text ==
+                                  value.username) {
+                                this.alert = 'Username sudah dipakai';
+                                setState(() {});
+                              } else {
+                                User.saveUser(
+                                    userKey:
+                                        '${this.usernameController.text}Data',
+                                    userValue: this.usernameController.text,
+                                    passwordKey:
+                                        '${this.passwordController.text}Data',
+                                    passwordValue:
+                                        this.passwordController.text);
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return LoginPage();
+                                }));
+                              }
+                            }
+                          });
+                        },
                       ),
                     ],
                   ),
